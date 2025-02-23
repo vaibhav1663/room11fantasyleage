@@ -28,7 +28,7 @@ export default function Home() {
     const player = playerData.find(p => p.name === playerName);
     if (!player) return { raw: 0, multiplied: 0 };
 
-    const points = parseFloat(player.point);
+    const points = parseFloat(player.rawPoints);
     let multipliedPoints = points;
 
     if (isCaptain) {
@@ -49,7 +49,7 @@ export default function Home() {
       team.players.forEach(playerName => {
         const player = playerData.find(p => p.name === playerName);
         if (player) {
-          let points = parseFloat(player.point);
+          let points = parseFloat(player.rawPoints);
 
           // Double points for captain, 1.5x for vice captain
           if (player.name === team.captain) {

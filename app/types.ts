@@ -2,7 +2,7 @@ export interface Player {
   pid: string;
   name: string;
   role: string;
-  point: string;
+  rawPoints: string;
   teamName: string;
   playingEleven: boolean;
 }
