@@ -17,6 +17,6 @@ export const teams: Team[] = [
     name: "Shubham Pawar",
     captain: "Virat Kohli",
     viceCaptain: "Babar Azam",
-    players: ["Virat Kohli","Babar Azam","Hardik Pandya","Mohammed Shami", "Rohit Sharma", "Axar Patel", "Shubhman Gill", "Mohammad Rizwan", "Shaheen Afridi", "Haris Rauf", "Agha Salman"]
+    players: ["Virat Kohli","Babar Azam","Hardik Pandya","Mohammed Shami", "Rohit Sharma", "Axar Patel", "Shubman Gill", "Mohammad Rizwan", "Shaheen Afridi", "Haris Rauf", "Agha Salman"]
   }
 ];
