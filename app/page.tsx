@@ -89,7 +89,7 @@ export default function Home() {
   const rankings = getTeamRankings();
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-3 sm:p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-4xl font-bold text-center mb-8 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
           IND vs PAK Room 11
@@ -98,7 +98,7 @@ export default function Home() {
         <div className="grid gap-6 mb-8">
           {rankings.map((team, index) => (
             <Card key={team.name} className={`bg-gray-800 border-gray-700 transform transition-all`}>
-              <CardHeader className="flex flex-row items-center justify-between pb-2">
+              <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 sm:p-6">
                 <CardTitle className="text-xl font-bold text-white flex items-center gap-2">
                   {index === 0 && <Trophy className="h-6 w-6 text-yellow-500" />}
                   {index === 1 && <Medal className="h-6 w-6 text-gray-400" />}
@@ -109,8 +109,8 @@ export default function Home() {
                   {team.points.toFixed(2)} pts
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 gap-4">
+              <CardContent className='p-3 sm:p-6'>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex items-center gap-2">
                     <Star className="h-5 w-5 text-yellow-500" />
                     <span className="text-gray-400">Captain:</span>
@@ -130,14 +130,14 @@ export default function Home() {
                 </div>
                 <div className="mt-4">
                   <div className="text-sm text-gray-400 mb-2">Team Players:</div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     {team.players.map(player => {
                       const isCaptain = player === team.captain;
                       const isViceCaptain = player === team.viceCaptain;
                       const points = getPlayerPoints(player, isCaptain, isViceCaptain);
                       return (
                         <div key={player} className="flex items-center justify-between text-gray-300 bg-gray-900/50 p-2 rounded">
-                          <span>• {player}</span>
+                          <span>{player}</span>
                           <span className={`text-sm ${
                             isCaptain ? 'text-yellow-500' : 
                             isViceCaptain ? 'text-purple-500' : 
