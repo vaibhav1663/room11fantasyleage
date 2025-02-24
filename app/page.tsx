@@ -11,7 +11,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=flashgame515378')
+    fetch('https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=flashgame929700')
       .then(res => res.json())
       .then((data: any) => {
         console.log(data);
