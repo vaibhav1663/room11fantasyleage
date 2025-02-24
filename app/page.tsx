@@ -136,7 +136,7 @@ export default function Home() {
                       const isViceCaptain = player === team.viceCaptain;
                       const points = getPlayerPoints(player, isCaptain, isViceCaptain);
                       return (
-                        <div key={player} className="flex items-center justify-between text-gray-300 bg-gray-900/50 p-2 rounded">
+                        <div key={player} className="flex items-center justify-between text-gray-300 bg-gray-900/50 p-2 px-3 rounded">
                           <span>{player}</span>
                           <span className={`text-sm ${
                             isCaptain ? 'text-yellow-500' : 
