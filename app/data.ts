@@ -11,7 +11,7 @@ export const teams: Team[] = [
     name: "Vaibhav Khating",
     captain: "Glenn Phillips",
     viceCaptain: "Tanzid Hasan",
-    players: ["Glenn Phillips","Kane Williamson","Tanzid Hasan","Tom Latham", "Devon Conway", "Matt Henry", "Rishad Hossain", "Mustafizur Rahman", "Tanzid Hasan", "Mitchell Santner","Mahmudullah"]
+    players: ["Glenn Phillips","Kane Williamson","Tanzid Hasan","Tom Latham", "Devon Conway", "Matt Henry", "Rishad Hossain", "Mustafizur Rahman", "Mushfiqur Rahim", "Mitchell Santner","Mahmudullah"]
   },
   {
     name: "Shubham Pawar",
