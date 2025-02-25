@@ -161,8 +161,10 @@ export default function CreateRoomPage() {
 
       const room = await response.json();
       router.push(`/rooms/${room._id}`);
+      
+      setLoading(false);
     } catch (error) {
-      console.error('Error creating room:', error);
+      alert('Error creating room:'+ error);
       setLoading(false);
     }
   };
@@ -171,7 +173,7 @@ export default function CreateRoomPage() {
   const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-3 pt-6 sm:p-8">
       <div className="max-w-2xl mx-auto">
         <Link href="/rooms" className="inline-flex items-center text-gray-400 hover:text-white mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
@@ -245,7 +247,7 @@ export default function CreateRoomPage() {
 
               <div className="space-y-2">
                 <Label>Match Start Time</Label>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -271,7 +273,7 @@ export default function CreateRoomPage() {
                       />
                     </PopoverContent>
                   </Popover>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 ">
                     <Select value={startHour} onValueChange={(value) => handleStartTimeChange(value, startMinute, startAmPm)} >
                       <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
                         <SelectValue placeholder="Hour" />
@@ -311,7 +313,7 @@ export default function CreateRoomPage() {
 
               <div className="space-y-2">
                 <Label>Team Selection Deadline</Label>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
