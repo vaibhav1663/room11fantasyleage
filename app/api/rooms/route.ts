@@ -6,10 +6,12 @@ export async function POST(request: Request) {
   try {
     await dbConnect();
     const body = await request.json();
-    
+    console.log('Creating room:', body);
     const room = await Room.create(body);
+    console.log('Room created:', room);
     return NextResponse.json(room);
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: 'Error creating room' }, { status: 500 });
   }
 }

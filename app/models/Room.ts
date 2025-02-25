@@ -10,7 +10,7 @@ const teamSchema = new mongoose.Schema({
 
 const roomSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  slug: { type: String, required: truncate },
+  slug: { type: String, required: true },
   startTime: { type: Date, required: true },
   endTime: { type: Date, required: true },
   teams: [teamSchema],
