@@ -44,15 +44,12 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     if (!room) return;
 
     try {
-      const response = await fetch(`/api/rooms/${params.id}`, {
-        method: 'PUT',
+      const response = await fetch(`/api/rooms/${params.id}/add-team`, {
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          ...room,
-          teams: [...room.teams, newTeam]
-        }),
+        body: JSON.stringify(newTeam),
       });
 
       if (!response.ok) throw new Error('Failed to add team');
