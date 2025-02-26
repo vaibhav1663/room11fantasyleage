@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Medal, Star, Trophy } from 'lucide-react';
 
-const Scores = ({ teams }: { teams: Team[] }) => {
+const Scores = ({ teams , slug }: { teams: Team[] , slug: string }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=flashgame929700')
+        fetch('https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=' + slug)
             .then(res => res.json())
             .then((data: any) => {
                 console.log(data);
@@ -40,6 +40,11 @@ const Scores = ({ teams }: { teams: Team[] }) => {
             multiplied: multipliedPoints
         };
     };
+
+    useEffect(() => {
+        console.log(teams);
+        console.log(playerData);
+    }, [teams, playerData]);
 
     const calculateTeamPoints = (team: Team) => {
         let totalPoints = 0;
