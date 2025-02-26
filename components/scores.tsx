@@ -4,22 +4,30 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Medal, Star, Trophy } from 'lucide-react';
 
-const Scores = ({ teams , slug }: { teams: Team[] , slug: string }) => {
+const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const fetchFantasyPoints = async () => {
+        try {
+            const res = await fetch(`https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=${slug}`);
+            const data = await res.json();
+            console.log(data);
+
+            if (data?.data?.playerList) {
+                setPlayerData(data.data.playerList);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        fetch('https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=' + slug)
-            .then(res => res.json())
-            .then((data: any) => {
-                console.log(data);
-                setPlayerData(data.data.playerList || []);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-                setLoading(false);
-            });
+        fetchFantasyPoints();
+        const interval = setInterval(fetchFantasyPoints, 30000);
+        return () => clearInterval(interval);
     }, []);
 
     const getPlayerPoints = (playerName: string, isCaptain: boolean, isViceCaptain: boolean) => {
@@ -40,11 +48,6 @@ const Scores = ({ teams , slug }: { teams: Team[] , slug: string }) => {
             multiplied: multipliedPoints
         };
     };
-
-    useEffect(() => {
-        console.log(teams);
-        console.log(playerData);
-    }, [teams, playerData]);
 
     const calculateTeamPoints = (team: Team) => {
         let totalPoints = 0;
@@ -106,7 +109,7 @@ const Scores = ({ teams , slug }: { teams: Team[] , slug: string }) => {
                             {team.points.toFixed(2)} pts
                         </div>
                     </CardHeader>
-                    <CardContent className='p-3 sm:p-6'>
+                    <CardContent className='p-3 pt-2 sm:p-6'>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div className="flex items-center gap-2">
                                 <Star className="h-5 w-5 text-yellow-500" />
@@ -136,8 +139,8 @@ const Scores = ({ teams , slug }: { teams: Team[] , slug: string }) => {
                                         <div key={player} className="flex items-center justify-between text-gray-300 bg-gray-900/50 p-2 px-3 rounded">
                                             <span>{player}</span>
                                             <span className={`text-sm ${isCaptain ? 'text-yellow-500' :
-                                                    isViceCaptain ? 'text-purple-500' :
-                                                        'text-gray-400'
+                                                isViceCaptain ? 'text-purple-500' :
+                                                    'text-gray-400'
                                                 }`}>
                                                 {points.raw} {isCaptain ? '× 2' : isViceCaptain ? '× 1.5' : ''} = {points.multiplied}
                                             </span>

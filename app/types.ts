@@ -44,3 +44,17 @@ export interface MatchPlayersResponse {
     [key: string]: MatchPlayer;
   };
 }
+
+export interface ScoreCardData {
+  title: string;
+  short_title: string;
+  team_1: any;
+  team_2: any;
+  live_inning_number: string;
+  status_note: string;
+  toss_result: string;
+  toss_winner: string;
+  status_str: string;
+  winning_team_id: number | null;
+  tournament_name: string;
+}
