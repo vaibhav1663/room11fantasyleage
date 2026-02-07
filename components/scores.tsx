@@ -6,6 +6,7 @@ import { Medal, Star, Trophy } from 'lucide-react';
 
 const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
+    const [playerIdByName, setPlayerIdByName] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(true);
 
     const fetchFantasyPoints = async () => {
@@ -24,14 +25,43 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
         }
     };
 
+    const fetchMatchPlayers = async () => {
+        try {
+            const res = await fetch(`/api/match-players?slug=${slug}`);
+            const data = await res.json();
+            if (data?.data) {
+                const mapping: Record<string, string> = {};
+                Object.values(data.data).forEach((player: any) => {
+                    const id = player?.entityPlayerId ?? player?.playerId;
+                    if (player?.name && id !== undefined && id !== null) {
+                        mapping[player.name] = String(id);
+                    }
+                });
+                setPlayerIdByName(mapping);
+            }
+        } catch (error) {
+            console.error('Error fetching match players:', error);
+        }
+    };
+
     useEffect(() => {
+        fetchMatchPlayers();
         fetchFantasyPoints();
         const interval = setInterval(fetchFantasyPoints, 30000);
         return () => clearInterval(interval);
     }, []);
 
+    const findLeaderboardPlayer = (playerName: string) => {
+        const mappedId = playerIdByName[playerName];
+        if (mappedId) {
+            const byId = playerData.find(p => String(p.pid) === mappedId);
+            if (byId) return byId;
+        }
+        return playerData.find(p => p.name === playerName);
+    };
+
     const getPlayerPoints = (playerName: string, isCaptain: boolean, isViceCaptain: boolean) => {
-        const player = playerData.find(p => p.name === playerName);
+        const player = findLeaderboardPlayer(playerName);
         if (!player) return { raw: 0, multiplied: 0 };
 
         const points = parseFloat(player.rawPoints);
@@ -53,14 +83,14 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
         let totalPoints = 0;
         if (team.players.length > 0 && playerData.length > 0) {
             team.players.forEach(playerName => {
-                const player = playerData.find(p => p.name === playerName);
+                const player = findLeaderboardPlayer(playerName);
                 if (player) {
                     let points = parseFloat(player.rawPoints);
 
                     // Double points for captain, 1.5x for vice captain
-                    if (player.name === team.captain) {
+                    if (playerName === team.captain) {
                         points *= 2;
-                    } else if (player.name === team.viceCaptain) {
+                    } else if (playerName === team.viceCaptain) {
                         points *= 1.5;
                     }
 
