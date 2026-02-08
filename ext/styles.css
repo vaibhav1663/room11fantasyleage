@@ -174,7 +174,7 @@ body:fullscreen .fantasy-rankings-wrapper {
 }
 
 .fantasy-rankings-widget .team-name {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   color: white;
   margin-bottom: 4px;
@@ -184,12 +184,9 @@ body:fullscreen .fantasy-rankings-wrapper {
 }
 
 .fantasy-rankings-widget .team-points {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 800;
-  background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 /* Scrollbar styling */
