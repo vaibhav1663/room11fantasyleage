@@ -197,13 +197,12 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
                                         index === 2 ? 'bg-amber-600/10' : ''
                                 }`}
                         >
-                            <div className="relative flex items-center justify-center" style={{ width: '35px' }}>
+                            <div className="relative flex items-center justify-center overflow-visible" style={{ width: '35px' }}>
                                 <span
                                     className="font-black text-transparent bg-clip-text bg-gradient-to-b from-[#E2E2E2] to-[#6B6B6B] select-none leading-none"
                                     style={{
                                         fontSize: '50px',
                                         WebkitTextStroke: '1px rgba(255, 255, 255, 0.1)',
-                                        letterSpacing: '-0.05em'
                                     }}
                                 >
                                     {index + 1}
