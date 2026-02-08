@@ -161,6 +161,38 @@
       font-size: 13px;
       color: rgba(255, 255, 255, 0.9);
     }
+
+    .checkbox-group {
+      margin-bottom: 12px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .checkbox-label:has(input:checked) {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: #a855f7;
+    }
+
+    .checkbox-label input[type="checkbox"] {
+      width: auto;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .checkbox-label span {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.9);
+    }
   </style>
 </head>
 <body>
@@ -183,6 +215,13 @@
         <span>Top Left</span>
       </label>
     </div>
+  </div>
+
+  <div class="checkbox-group">
+    <label class="checkbox-label">
+      <input type="checkbox" id="showCardStyle" checked>
+      <span>Show card backgrounds & borders</span>
+    </label>
   </div>
 
   <button id="saveBtn">Save & Show Rankings</button>

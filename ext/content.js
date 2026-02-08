@@ -20,6 +20,14 @@ function getPosition() {
   });
 }
 
+function getShowCardStyle() {
+  return new Promise((resolve) => {
+    chrome.storage.sync.get(['showCardStyle'], function(result) {
+      resolve(result.showCardStyle !== false); // Default to true
+    });
+  });
+}
+
 // Wait for role="main" element to load
 function waitForMainContainer() {
   return new Promise((resolve) => {
@@ -65,12 +73,16 @@ async function createRankingsWidget() {
   const widgetWrapper = document.createElement('div');
   widgetWrapper.id = 'fantasy-rankings-wrapper';
   const position = await getPosition();
+  const showCardStyle = await getShowCardStyle();
   widgetWrapper.className = `fantasy-rankings-wrapper position-${position}`;
 
   // Create container for content
   rankingsWidget = document.createElement('div');
   rankingsWidget.id = 'fantasy-rankings-widget';
-  rankingsWidget.className = 'fantasy-rankings-widget';
+  rankingsWidget.classList.add('fantasy-rankings-widget');
+  if (!showCardStyle) {
+    rankingsWidget.classList.add('no-card-style');
+  }
 
   // Initial content - simplified structure, no header
   rankingsWidget.innerHTML = `
@@ -253,7 +265,12 @@ function displayRankings(roomData, playerList, matchPlayers) {
     `;
   });
 
-  html += `</div>`;
+  html += `
+    </div>
+    <div class="refresh-footer">
+      <div class="refresh-time">Last refreshed at ${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>
+    </div>
+  `;
   rankingsBody.innerHTML = html;
 }
 
@@ -267,6 +284,14 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         const wrapper = document.getElementById('fantasy-rankings-wrapper');
         if (wrapper) {
           wrapper.className = `fantasy-rankings-wrapper position-${request.position}`;
+        }
+      }
+      // Update card style if changed
+      if (request.showCardStyle !== undefined) {
+        if (request.showCardStyle) {
+          rankingsWidget.classList.remove('no-card-style');
+        } else {
+          rankingsWidget.classList.add('no-card-style');
         }
       }
       fetchAndDisplayRankings();
