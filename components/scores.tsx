@@ -189,7 +189,7 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
             {/* Rankings Section */}
             <div className="w-full lg:w-96 block">
                 <CardContent className="p-0 sm:p-0 flex flex-col gap-2">
-                    {rankings.map((team, index) => (
+                    {rankings.slice(0, 5).map((team, index) => (
                         <Card
                             key={team.name}
                             className={`flex items-center gap-4 p-4 sm:p-4 border-b border-gray-700 last:border-b-0 ${index === 0 ? 'bg-yellow-500/10' :
