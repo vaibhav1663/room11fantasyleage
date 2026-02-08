@@ -188,7 +188,7 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
 
             {/* Rankings Section */}
             <div className="w-full lg:w-96 block">
-                <CardContent className="p-0 sm:p-0 flex flex-col gap-2 pb-10">
+                <CardContent className="p-0 sm:p-0 flex flex-col gap-2">
                     {rankings.map((team, index) => (
                         <Card
                             key={team.name}
@@ -215,7 +215,7 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
                             </div>
                         </Card>
                     ))}
-                    <div className="text-center text-sm text-gray-500 mt-4">
+                    <div className="text-center text-sm text-gray-500">
                         ...
                     </div>
                     
