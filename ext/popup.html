@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 300px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+      color: white;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+      text-align: center;
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .input-group {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    input:focus {
+      border-color: #a855f7;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 12px;
+      text-align: center;
+      display: none;
+    }
+
+    .status.success {
+      background: rgba(34, 197, 94, 0.2);
+      color: #4ade80;
+      display: block;
+    }
+
+    .status.error {
+      background: rgba(239, 68, 68, 0.2);
+      color: #f87171;
+      display: block;
+    }
+
+    .current-room {
+      margin-top: 16px;
+      padding: 12px;
+      background: rgba(168, 85, 247, 0.1);
+      border-radius: 8px;
+      border: 1px solid rgba(168, 85, 247, 0.3);
+    }
+
+    .current-room-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 4px;
+    }
+
+    .current-room-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #a855f7;
+      word-break: break-all;
+    }
+
+    .clear-btn {
+      margin-top: 8px;
+      background: rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    .clear-btn:hover {
+      background: rgba(239, 68, 68, 0.3);
+    }
+
+    .position-options {
+      display: flex;
+      gap: 12px;
+    }
+
+    .radio-label {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .radio-label:has(input:checked) {
+      background: rgba(168, 85, 247, 0.3);
+      border-color: #a855f7;
+    }
+
+    .radio-label input[type="radio"] {
+      width: auto;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .radio-label span {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.9);
+    }
+  </style>
+</head>
+<body>
+  <h2>🏏 Fantasy League Rankings</h2>
+  
+  <div class="input-group">
+    <label for="roomId">Room ID</label>
+    <input type="text" id="roomId" placeholder="Enter Room ID" />
+  </div>
+
+  <div class="input-group">
+    <label>Position</label>
+    <div class="position-options">
+      <label class="radio-label">
+        <input type="radio" name="position" value="right" checked>
+        <span>Top Right</span>
+      </label>
+      <label class="radio-label">
+        <input type="radio" name="position" value="left">
+        <span>Top Left</span>
+      </label>
+    </div>
+  </div>
+
+  <button id="saveBtn">Save & Show Rankings</button>
+
+  <div id="status" class="status"></div>
+
+  <div id="currentRoom" class="current-room" style="display: none;">
+    <div class="current-room-label">Current Room</div>
+    <div class="current-room-value" id="currentRoomValue"></div>
+    <button id="clearBtn" class="clear-btn">Clear Room ID</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
