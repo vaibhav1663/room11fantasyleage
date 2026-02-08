@@ -150,7 +150,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-3 pt-6 sm:p-8 text-white">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <Link href="/rooms" className="inline-flex items-center text-gray-400 hover:text-white mb-6">
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Rooms
@@ -171,7 +171,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           )}
         </div>
 
-        <Card className="bg-gray-800 border-gray-700 mb-8">
+        {!isDeadlinePassed &&<Card className="bg-gray-800 border-gray-700 mb-8">
           <CardContent className="pt-3 sm:pt-6 text-white">
             <div className="flex flex-col sm:flex-row sm:items-center gap-4 text-sm">
               <div className="flex items-center gap-2">
@@ -207,7 +207,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
               Share link with friends
             </Button>
           </CardContent>
-        </Card>
+        </Card>}
 
         {showAddTeam && (
           <Card className="bg-gray-800 border-gray-700 mb-8">
