@@ -192,7 +192,7 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
                     {rankings.slice(0, 5).map((team, index) => (
                         <Card
                             key={team.name}
-                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-gray-700 last:border-b-0 ${index === 0 ? 'bg-yellow-500/10' :
+                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-gray-400/10 last:border-b-0 ${index === 0 ? 'bg-yellow-500/10' :
                                     index === 1 ? 'bg-gray-400/10' :
                                         index === 2 ? 'bg-amber-600/10' : ''
                                 }`}
