@@ -24,11 +24,22 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 async function fetchRoomData(roomId) {
-  const response = await fetch(`https://sapna11.vercel.app/api/rooms/${roomId}`);
-  if (!response.ok) {
+  const [roomResponse, teamsResponse] = await Promise.all([
+    fetch(`https://sapna11.vercel.app/api/rooms/${roomId}`),
+    fetch(`https://sapna11.vercel.app/api/rooms/${roomId}/add-team`)
+  ]);
+  
+  if (!roomResponse.ok) {
     throw new Error('Failed to fetch room data');
   }
-  return await response.json();
+  
+  const roomData = await roomResponse.json();
+  const teams = teamsResponse.ok ? await teamsResponse.json() : [];
+  
+  return {
+    ...roomData,
+    teams: teams
+  };
 }
 
 async function fetchFantasyPoints(slug) {

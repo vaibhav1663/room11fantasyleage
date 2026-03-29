@@ -163,7 +163,7 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
             </div>
 
             {/* Rankings Section */}
-            <div className="w-full lg:w-64 block">
+            <div className="w-full md:w-64 block">
                 <CardContent className="p-0 sm:p-0 flex flex-col gap-2">
                     {rankings.slice(0, 5).map((team, index) => (
                         <Card

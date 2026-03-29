@@ -192,37 +192,43 @@ function displayRankings(roomData, playerList, matchPlayers) {
   const rankingsBody = rankingsWidget.querySelector('.rankings-body');
   if (!rankingsBody) return;
 
-  // Create player ID mapping
-  const playerIdByName = {};
-  Object.values(matchPlayers).forEach((player) => {
-    const id = player?.entityPlayerId ?? player?.playerId;
-    if (player?.name && id !== undefined && id !== null) {
-      playerIdByName[player.name] = String(id);
-    }
-  });
+  // Create a map of entityPlayerId to player data from matchPlayers
+  const playerDataMap = {};
+  if (Array.isArray(matchPlayers)) {
+    matchPlayers.forEach(teamData => {
+      if (teamData.playersList && Array.isArray(teamData.playersList)) {
+        teamData.playersList.forEach(player => {
+          if (player.entityPlayerId) {
+            playerDataMap[player.entityPlayerId] = player;
+          }
+        });
+      }
+    });
+  }
 
-  // Helper to find player in leaderboard
-  const findLeaderboardPlayer = (playerName) => {
-    const mappedId = playerIdByName[playerName];
-    if (mappedId) {
-      const byId = playerList.find(p => String(p.pid) === mappedId);
-      if (byId) return byId;
-    }
-    return playerList.find(p => p.name === playerName);
+  // Helper to find player in leaderboard by entityPlayerId
+  const findLeaderboardPlayer = (entityPlayerId) => {
+    return playerList.find(p => String(p.pid) === String(entityPlayerId));
+  };
+
+  // Helper to get player name from entityPlayerId
+  const getPlayerName = (entityPlayerId) => {
+    const player = playerDataMap[entityPlayerId];
+    return player ? player.name : 'Unknown';
   };
 
   // Calculate team points
   const calculateTeamPoints = (team) => {
     let totalPoints = 0;
     if (team.players && team.players.length > 0 && playerList.length > 0) {
-      team.players.forEach(playerName => {
-        const player = findLeaderboardPlayer(playerName);
+      team.players.forEach(entityPlayerId => {
+        const player = findLeaderboardPlayer(entityPlayerId);
         if (player) {
           let points = parseFloat(player.rawPoints) || 0;
 
-          if (playerName === team.captain) {
+          if (entityPlayerId === team.captain) {
             points *= 2;
-          } else if (playerName === team.viceCaptain) {
+          } else if (entityPlayerId === team.viceCaptain) {
             points *= 1.5;
           }
 
