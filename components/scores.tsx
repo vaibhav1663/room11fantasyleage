@@ -170,29 +170,29 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
                     {rankings.slice(0, 5).map((team, index) => (
                         <Card
                             key={team.name}
-                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-neutral-700 bg-neutral-400/10 last:border-b-0 ${index === 0 ? 'bg-yellow-500/10' :
-                                    index === 1 ? 'bg-neutral-400/10' :
-                                        index === 2 ? 'bg-amber-600/10' : ''
+                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-400/10 last:border-b-0 ${index === 0 ? 'bg-yellow-100 dark:bg-yellow-500/10' :
+                                    index === 1 ? 'bg-neutral-100 dark:bg-neutral-400/10' :
+                                        index === 2 ? 'bg-amber-100 dark:bg-amber-600/10' : ''
                                 }`}
                         >
                             <div className="relative flex items-center justify-center overflow-visible" style={{ width: '35px' }}>
                                 <span
-                                    className="font-black text-transparent bg-clip-text bg-gradient-to-b from-[#E2E2E2] to-[#6B6B6B] select-none leading-none"
+                                    className="font-black text-transparent bg-clip-text bg-gradient-to-b from-neutral-400 to-neutral-600 dark:from-[#E2E2E2] dark:to-[#6B6B6B] select-none leading-none"
                                     style={{
                                         fontSize: '50px',
-                                        WebkitTextStroke: '1px rgba(255, 255, 255, 0.1)',
+                                        WebkitTextStroke: '1px rgba(0, 0, 0, 0.1)',
                                     }}
                                 >
                                     {index + 1}
                                 </span>
                             </div>
                             <div className="flex-1 min-w-0">
-                                <div className="text-white font-semibold truncate">{team.name}</div>
-                                <div className="text-purple-400 text-sm font-bold">{team.points.toFixed(2)} pts</div>
+                                <div className="text-neutral-900 dark:text-white font-semibold truncate">{team.name}</div>
+                                <div className="text-purple-600 dark:text-purple-400 text-sm font-bold">{team.points.toFixed(2)} pts</div>
                             </div>
                         </Card>
                     ))}
-                    <div className="text-center text-sm text-neutral-500">
+                    <div className="text-center text-sm text-neutral-400 dark:text-neutral-500">
                         ...
                     </div>
                     
