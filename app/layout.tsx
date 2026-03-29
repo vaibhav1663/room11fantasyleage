@@ -13,6 +13,29 @@ const geistMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: 'Sapna 11',
   description: 'Build fantasy cricket teams, compete with friends in private leagues, and track real-time player performances.',
+  metadataBase: new URL('https://sapna11.vercel.app'),
+  openGraph: {
+    title: 'Sapna 11',
+    description: 'Build fantasy cricket teams, compete with friends in private leagues, and track real-time player performances.',
+    url: 'https://sapna11.vercel.app',
+    siteName: 'Sapna 11',
+    images: [
+      {
+        url: '/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Sapna 11 - Fantasy Cricket',
+      },
+    ],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sapna 11',
+    description: 'Build fantasy cricket teams, compete with friends in private leagues, and track real-time player performances.',
+    images: ['/og.jpg'],
+  },
 };
 
 export default function RootLayout({
