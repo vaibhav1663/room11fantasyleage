@@ -228,8 +228,8 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
   return (
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white p-3 pt-16 sm:pt-20 sm:p-8">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
+      <div className="max-w-4xl mx-auto pt-4 sm:pt-0">
+        <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white ">
             {room.name}
           </h1>
