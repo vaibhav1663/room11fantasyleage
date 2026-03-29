@@ -170,9 +170,9 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
                     {rankings.slice(0, 5).map((team, index) => (
                         <Card
                             key={team.name}
-                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-400/10 last:border-b-0 ${index === 0 ? 'bg-yellow-100 dark:bg-yellow-500/10' :
+                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-neutral-200 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-400/10 last:border-b-0 ${index === 0 ? 'dark:bg-yellow-500/10' :
                                     index === 1 ? 'bg-neutral-100 dark:bg-neutral-400/10' :
-                                        index === 2 ? 'bg-amber-100 dark:bg-amber-600/10' : ''
+                                        index === 2 ? 'dark:bg-amber-600/10' : ''
                                 }`}
                         >
                             <div className="relative flex items-center justify-center overflow-visible" style={{ width: '35px' }}>
