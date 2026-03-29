@@ -230,7 +230,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
     <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white p-3 pt-16 sm:pt-20 sm:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-xl sm:text-3xl font-bold text-neutral-900 dark:text-white ">
+          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white ">
             {room.name}
           </h1>
           {canAddTeam && !showAddTeam && (
@@ -285,7 +285,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         {showAddTeam && (
           <Card className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 mb-8">
             <CardHeader className='pb-0 sm:pb-0'>
-              <CardTitle className="text-2xl font-bold text-neutral-900 dark:text-white">
+              <CardTitle className="text-xl sm:text-2xl font-bold text-neutral-900 dark:text-white">
                 Add New Team
               </CardTitle>
             </CardHeader>
