@@ -114,7 +114,7 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
                                 {index === 2 && <Medal className="h-6 w-6 text-amber-600" />}
                                 {team.name}
                             </CardTitle>
-                            <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">
+                            <div className="text-2xl font-bold text-neutral-900 dark:text-white">
                                 {team.points.toFixed(2)} pts
                             </div>
                         </CardHeader>
@@ -186,7 +186,7 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
                             </div>
                             <div className="flex-1 min-w-0">
                                 <div className="text-neutral-900 dark:text-white font-semibold truncate">{team.name}</div>
-                                <div className="text-purple-600 dark:text-purple-400 text-sm font-bold">{team.points.toFixed(2)} pts</div>
+                                <div className="text-neutral-700 dark:text-neutral-300 text-sm font-bold">{team.points.toFixed(2)} pts</div>
                             </div>
                         </Card>
                     ))}
