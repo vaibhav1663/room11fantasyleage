@@ -13,6 +13,9 @@ export function Navbar() {
             <span className="text-xs px-1.5 py-0.5 bg-neutral-200 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-400 rounded">BETA</span>
           </Link>
           <div className="flex items-center gap-3">
+            <Link href="/how-it-works" className="text-sm text-neutral-900 dark:text-white hover:text-neutral-700 dark:hover:text-neutral-300 transition-colors hidden sm:block mr-1">
+              How it Works? 
+            </Link>
             <Link href="/rooms" className="text-sm bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 px-4 py-2 rounded-md transition-colors">
               Explore Rooms
             </Link>
