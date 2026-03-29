@@ -341,14 +341,14 @@ export default function RoomPage({ params }: { params: { id: string } }) {
                                 <div className="flex items-start justify-between">
                                   <div className="flex-1">
                                     <div className="font-medium text-neutral-900 dark:text-white mb-1">{player.name}</div>
-                                    <div className="text-sm text-neutral-600 dark:text-neutral-400 font-[family-name:var(--font-geist-mono)]">
-                                      {player.teamAbbr} • {player.playing_role.toUpperCase()} {player.role}
+                                    <div className="flex items-center gap-2 text-sm text-neutral-600 dark:text-neutral-400 font-[family-name:var(--font-geist-mono)]">
+                                      <span>{player.teamAbbr} • {player.playing_role.toUpperCase()} {player.role}</span>
+                                      {player.isPlayingEleven && (
+                                        <Badge variant="outline" className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border-green-600 dark:border-green-600">
+                                          XI
+                                        </Badge>
+                                      )}
                                     </div>
-                                    {player.isPlayingEleven && (
-                                      <Badge variant="outline" className="mt-1 text-xs bg-green-900/30 text-green-400 border-green-600">
-                                        XI
-                                      </Badge>
-                                    )}
                                   </div>
                                 </div>
                                 {isSelected && (
