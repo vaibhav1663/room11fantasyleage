@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Room } from '../types';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Plus, Users, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
@@ -51,9 +52,25 @@ export default function RoomsPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white pt-16 sm:pt-20 p-8">
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white pt-16 sm:pt-20 p-4 sm:p-6">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center">Loading rooms...</div>
+          <div className="flex justify-between items-center mb-6">
+            <Skeleton className="h-8 w-32" />
+            <Skeleton className="h-10 w-36" />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <Card key={i} className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800">
+                <CardHeader className="p-3 sm:p-4 pb-0 sm:pb-0">
+                  <Skeleton className="h-6 w-3/4" />
+                </CardHeader>
+                <CardContent className="p-3 sm:p-4 pt-2">
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-2/3" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         </div>
       </div>
     );

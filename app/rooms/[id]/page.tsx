@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ArrowLeft, Plus, Trophy, Star, Clock, AlertTriangle, Share2 } from "lucide-react";
 import Link from 'next/link';
@@ -177,9 +178,21 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white pt-16 sm:pt-20 p-8">
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white p-3 pt-16 sm:pt-20 sm:p-8">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center">Loading room...</div>
+          <div className="flex justify-between items-center mb-8">
+            <Skeleton className="h-10 w-64" />
+            <Skeleton className="h-10 w-32" />
+          </div>
+          <Card className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 mb-8">
+            <CardContent className="pt-6">
+              <div className="space-y-4">
+                <Skeleton className="h-5 w-full" />
+                <Skeleton className="h-5 w-3/4" />
+                <Skeleton className="h-10 w-48" />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     );
