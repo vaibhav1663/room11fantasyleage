@@ -122,7 +122,6 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="flex items-center gap-2">
                                     <Star className="h-5 w-5 text-yellow-500" />
-                                    <span className="text-neutral-600 dark:text-neutral-400">Captain:</span>
                                     <span className="text-neutral-900 dark:text-white">{getPlayerName(team.captain)}</span>
                                     <span className="text-sm text-yellow-600 dark:text-yellow-500">
                                         ({getPlayerPoints(team.captain, true, false).raw} × 2 = {getPlayerPoints(team.captain, true, false).multiplied})
@@ -130,7 +129,6 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Star className="h-5 w-5 text-purple-500" />
-                                    <span className="text-neutral-600 dark:text-neutral-400">Vice Captain:</span>
                                     <span className="text-neutral-900 dark:text-white">{getPlayerName(team.viceCaptain)}</span>
                                     <span className="text-sm text-purple-600 dark:text-purple-500">
                                         ({getPlayerPoints(team.viceCaptain, false, true).raw} × 1.5 = {getPlayerPoints(team.viceCaptain, false, true).multiplied})
