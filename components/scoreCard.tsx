@@ -80,20 +80,20 @@ export function ScoreCard({slug}: {slug: string}) {
                   />
                   <div>
                     <h3 className="font-semibold text-lg">{data.team_1.name}</h3>
-                    <p className="text-sm text-gray-600">{data.team_1.short_name}</p>
+                    <p className="text-sm text-neutral-600">{data.team_1.short_name}</p>
                   </div>
                 </div>
                 <div className="text-right md:ml-auto">
                   <p className="font-bold text-xl">{data.team_1.scores || '-'}</p>
-                  <p className="text-sm text-gray-600">{data.team_1.overs || ''}</p>
+                  <p className="text-sm text-neutral-600">{data.team_1.overs || ''}</p>
                 </div>
               </div>
             </div>
   
             {/* VS Divider */}
             <div className="my-4 md:my-0 flex items-center justify-center">
-              <div className="hidden md:block border-r border-gray-200 h-20"></div>
-              <div className="md:hidden border-t border-gray-200 w-full"></div>
+              <div className="hidden md:block border-r border-neutral-200 h-20"></div>
+              <div className="md:hidden border-t border-neutral-200 w-full"></div>
             </div>
   
             {/* Team 2 */}
@@ -107,12 +107,12 @@ export function ScoreCard({slug}: {slug: string}) {
                   />
                   <div>
                     <h3 className="font-semibold text-lg">{data.team_2.name}</h3>
-                    <p className="text-sm text-gray-600">{data.team_2.short_name}</p>
+                    <p className="text-sm text-neutral-600">{data.team_2.short_name}</p>
                   </div>
                 </div>
                 <div className="text-right md:text-left md:order-1">
                   <p className="font-bold text-xl">{data.team_2.scores || '-'}</p>
-                  <p className="text-sm text-gray-600">{data.team_2.overs || ''}</p>
+                  <p className="text-sm text-neutral-600">{data.team_2.overs || ''}</p>
                 </div>
               </div>
             </div>
@@ -121,7 +121,7 @@ export function ScoreCard({slug}: {slug: string}) {
   
         {/* Footer */}
         {(data.toss_result || data.status_note) && (
-          <div className="bg-gray-50 p-4 text-sm text-gray-600">
+          <div className="bg-neutral-50 p-4 text-sm text-neutral-600">
             {data.toss_result && <p>{data.toss_result}</p>}
             {data.status_note && <p>{data.status_note}</p>}
           </div>

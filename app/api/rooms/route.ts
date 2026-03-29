@@ -16,12 +16,32 @@ export async function POST(request: Request) {
   }
 }
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     await dbConnect();
-    const rooms = await Room.find({}).sort({ createdAt: -1 });
-    return NextResponse.json(rooms);
+    
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
+    const skip = (page - 1) * limit;
+    
+    const [rooms, total] = await Promise.all([
+      Room.find({}).sort({ createdAt: -1 }).skip(skip).limit(limit),
+      Room.countDocuments({})
+    ]);
+    
+    return NextResponse.json({
+      rooms,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+        hasMore: skip + rooms.length < total
+      }
+    });
   } catch (error) {
+    console.error(error);
     return NextResponse.json({ error: 'Error fetching rooms' }, { status: 500 });
   }
 }

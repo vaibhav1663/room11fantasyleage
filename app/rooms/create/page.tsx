@@ -173,20 +173,16 @@ export default function CreateRoomPage() {
   const minutes = Array.from({ length: 60 }, (_, i) => i.toString().padStart(2, '0'));
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-3 pt-6 sm:p-8">
-      <div className="max-w-2xl mx-auto">
-        <Link href="/rooms" className="inline-flex items-center text-gray-400 hover:text-white mb-6">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Rooms
-        </Link>
-
-        <Card className="bg-gray-800 border-gray-700">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-white">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white pt-16 sm:pt-20 p-4 sm:p-6">
+      <div className="max-w-4xl mx-auto">
+        
+        <Card className="bg-transparent dark:bg-neutral-950 border-0">
+          <CardHeader className='p-0 sm:p-0 pb-0 sm:pb-0'>
+            <CardTitle className="text-2xl font-bold text-neutral-900 dark:text-white">
               Create New Room
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-white">
+          <CardContent className="text-neutral-900 dark:text-white px-0 sm:px-0">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="name">Room Name</Label>
@@ -195,21 +191,21 @@ export default function CreateRoomPage() {
                   placeholder="Enter room name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-white dark:bg-neutral-950 border-neutral-300 dark:border-neutral-600 text-neutral-900 dark:text-white"
                   required
                 />
               </div>
 
               <div className="space-y-2">
                 <Label>Select Match</Label>
-                <div className="grid gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {matches.map((match : any) => (
                     <div
                       key={match.match_id}
                       className={`p-4 rounded-lg border cursor-pointer transition-all ${
                         formData.slug === match.modes[0]
-                          ? 'bg-purple-900/50 border-purple-500'
-                          : 'bg-gray-900/50 border-gray-700 hover:border-gray-600'
+                          ? 'bg-neutral-100 dark:bg-neutral-800 border-neutral-400 dark:border-neutral-600'
+                          : 'bg-white dark:bg-neutral-950 border-neutral-300 dark:border-neutral-700 hover:border-neutral-400 dark:hover:border-neutral-600'
                       }`}
                       onClick={() => {
                         const startDate = new Date(match.start_date);
@@ -233,10 +229,10 @@ export default function CreateRoomPage() {
                       }}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <h3 className="font-semibold">{match.title_alias}</h3>
-                        <span className="text-sm text-gray-400">{match.format_str}</span>
+                        <h3 className="font-semibold text-neutral-900 dark:text-white">{match.title_alias}</h3>
+                        <span className="text-sm text-neutral-600 dark:text-neutral-400">{match.title_abbr_alias}</span>
                       </div>
-                      <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <div className="flex items-center gap-4 text-sm text-neutral-600 dark:text-neutral-400">
                         <span>{format(new Date(match.start_date), 'PPP')}</span>
                         <span>{format(new Date(match.start_date), 'p')}</span>
                       </div>
@@ -252,8 +248,8 @@ export default function CreateRoomPage() {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className={`flex-1 justify-start text-left font-normal bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:text-gray-100 ${
-                          !formData.startTime && "text-white"
+                        className={`flex-1 max-w-xs justify-start text-left font-normal ${
+                          !formData.startTime && "text-neutral-500 dark:text-neutral-400"
                         }`}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
@@ -275,36 +271,36 @@ export default function CreateRoomPage() {
                   </Popover>
                   <div className="flex gap-2 ">
                     <Select value={startHour} onValueChange={(value) => handleStartTimeChange(value, startMinute, startAmPm)} >
-                      <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
+                      <SelectTrigger className="w-[80px]">
                         <SelectValue placeholder="Hour" />
                       </SelectTrigger>
-                      <SelectContent className="bg-gray-800 text-white border-gray-700">
+                      <SelectContent>
                         {hours.map((hour) => (
-                          <SelectItem className='focus:bg-gray-700 focus:text-white' key={hour} value={hour}>
+                          <SelectItem className='cursor-pointer' key={hour} value={hour}>
                             {hour}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     <Select value={startMinute} onValueChange={(value) => handleStartTimeChange(startHour, value, startAmPm)}>
-                      <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
+                      <SelectTrigger className="w-[80px]">
                         <SelectValue placeholder="Min" />
                       </SelectTrigger>
-                      <SelectContent className='bg-gray-800 text-white border-gray-700 '>
+                      <SelectContent>
                         {minutes.map((minute) => (
-                          <SelectItem key={minute} value={minute} className='focus:bg-gray-700 focus:text-white'>
+                          <SelectItem key={minute} value={minute} className='cursor-pointer'>
                             {minute}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     <Select value={startAmPm} onValueChange={(value) => handleStartTimeChange(startHour, startMinute, value)}>
-                      <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
+                      <SelectTrigger className="w-[80px]">
                         <SelectValue placeholder="AM/PM" />
                       </SelectTrigger>
-                      <SelectContent className='bg-gray-800 text-white border-gray-700'>
-                        <SelectItem value="AM" className='focus:bg-gray-700 focus:text-white'>AM</SelectItem>
-                        <SelectItem value="PM" className='focus:bg-gray-700 focus:text-white'>PM</SelectItem>
+                      <SelectContent>
+                        <SelectItem value="AM" className='cursor-pointer'>AM</SelectItem>
+                        <SelectItem value="PM" className='cursor-pointer'>PM</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -318,8 +314,8 @@ export default function CreateRoomPage() {
                     <PopoverTrigger asChild>
                       <Button
                         variant="outline"
-                        className={`flex-1 justify-start text-left font-normal bg-gray-800 text-white border-gray-700 hover:bg-gray-700 hover:text-gray-100 ${
-                          !formData.endTime && "text-white"
+                        className={`flex-1 max-w-xs justify-start text-left font-normal ${
+                          !formData.endTime && "text-neutral-500 dark:text-neutral-400"
                         }`}
                       >
                         <CalendarIcon className="mr-2 h-4 w-4" />
@@ -341,48 +337,48 @@ export default function CreateRoomPage() {
                   </Popover>
                   <div className="flex gap-2">
                     <Select value={endHour} onValueChange={(value) => handleEndTimeChange(value, endMinute, endAmPm)}>
-                      <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
+                      <SelectTrigger className="w-[80px]">
                         <SelectValue placeholder="Hour" />
                       </SelectTrigger>
-                      <SelectContent className="bg-gray-800 text-white border-gray-700">
+                      <SelectContent>
                         {hours.map((hour) => (
-                          <SelectItem key={hour} value={hour} className='focus:bg-gray-700 focus:text-white'>
+                          <SelectItem key={hour} value={hour} className='cursor-pointer'>
                             {hour}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     <Select value={endMinute} onValueChange={(value) => handleEndTimeChange(endHour, value, endAmPm)}>
-                      <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
+                      <SelectTrigger className="w-[80px]">
                         <SelectValue placeholder="Min" />
                       </SelectTrigger>
-                      <SelectContent className='bg-gray-800 text-white border-gray-700'>
+                      <SelectContent>
                         {minutes.map((minute) => (
-                          <SelectItem key={minute} value={minute} className='focus:bg-gray-700 focus:text-white'>
+                          <SelectItem key={minute} value={minute} className='cursor-pointer'>
                             {minute}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
                     <Select value={endAmPm} onValueChange={(value) => handleEndTimeChange(endHour, endMinute, value)}>
-                      <SelectTrigger className="w-[80px] bg-gray-800 text-white border-gray-700">
+                      <SelectTrigger className="w-[80px]">
                         <SelectValue placeholder="AM/PM" />
                       </SelectTrigger>
-                      <SelectContent className='bg-gray-800 text-white border-gray-700'>
-                        <SelectItem value="AM" className='focus:bg-gray-700 focus:text-white'>AM</SelectItem>
-                        <SelectItem value="PM" className='focus:bg-gray-700 focus:text-white'>PM</SelectItem>
+                      <SelectContent>
+                        <SelectItem value="AM" className='cursor-pointer'>AM</SelectItem>
+                        <SelectItem value="PM" className='cursor-pointer'>PM</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
                 </div>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm text-neutral-600 dark:text-neutral-400">
                   Teams must be created before this deadline
                 </p>
               </div>
 
               <Button
                 type="submit"
-                className="w-full bg-purple-600 hover:bg-purple-700"
+                className="w-full bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900"
                 disabled={loading || !formData.name || !formData.slug || !formData.startTime || !formData.endTime}
               >
                 {loading ? 'Creating...' : 'Create Room'}

@@ -9,10 +9,18 @@ export async function GET(request: Request) {
   }
 
   try {
-    const response = await fetch(`https://apis.fancraze.com/v1_3/getMatchPlayers?slug=${slug}`);
+    const response = await fetch(`https://apis.fancraze.com/v1_3/getMatchPlayersTeamwise?slug=${slug}`);
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch match players');
+    }
+    
     const data = await response.json();
+    
+    // Return the data in the expected format
     return NextResponse.json(data);
   } catch (error) {
+    console.error('Error fetching match players:', error);
     return NextResponse.json({ error: 'Error fetching match players' }, { status: 500 });
   }
 }

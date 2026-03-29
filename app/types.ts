@@ -8,10 +8,13 @@ export interface Player {
 }
 
 export interface Team {
+  _id?: string;
+  roomId: string;
   name: string;
-  captain: string;
-  viceCaptain: string;
-  players: string[];
+  captain: number; // entityPlayerId
+  viceCaptain: number; // entityPlayerId
+  players: number[]; // array of entityPlayerIds
+  createdAt?: Date;
 }
 
 export interface LeaderboardResponse {
@@ -24,7 +27,6 @@ export interface Room {
   slug: string;
   startTime: Date;
   endTime: Date;
-  teams: Team[];
   createdAt: Date;
 }
 
@@ -33,16 +35,21 @@ export interface MatchPlayer {
   playerId: string;
   entityPlayerId: number;
   isPlayingEleven: boolean;
+  role: string;
+  playing_role: string;
+  teamName?: string;
+  teamAbbr?: string;
+}
+
+export interface TeamData {
   teamName: string;
   teamAbbr: string;
-  playingRole: string;
-  playingElevenMatchIdList: string[];
+  playersList: MatchPlayer[];
 }
 
 export interface MatchPlayersResponse {
-  data: {
-    [key: string]: MatchPlayer;
-  };
+  message: string;
+  data: TeamData[];
 }
 
 export interface ScoreCardData {

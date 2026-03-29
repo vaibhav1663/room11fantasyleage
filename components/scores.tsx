@@ -1,19 +1,17 @@
 'use client';
-import { Player, Team } from '@/app/types';
+import { Player, Team, TeamData } from '@/app/types';
 import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Medal, Star, Trophy } from 'lucide-react';
 
-const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
+const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, playersData: TeamData[] }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
-    const [playerIdByName, setPlayerIdByName] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(true);
 
     const fetchFantasyPoints = async () => {
         try {
             const res = await fetch(`https://apis.fancraze.com/challenge3/challenge/V3/getFantasyPointLeaderboard?slug=${slug}`);
             const data = await res.json();
-            console.log(data);
 
             if (data?.data?.playerList) {
                 setPlayerData(data.data.playerList);
@@ -25,43 +23,26 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
         }
     };
 
-    const fetchMatchPlayers = async () => {
-        try {
-            const res = await fetch(`/api/match-players?slug=${slug}`);
-            const data = await res.json();
-            if (data?.data) {
-                const mapping: Record<string, string> = {};
-                Object.values(data.data).forEach((player: any) => {
-                    const id = player?.entityPlayerId ?? player?.playerId;
-                    if (player?.name && id !== undefined && id !== null) {
-                        mapping[player.name] = String(id);
-                    }
-                });
-                setPlayerIdByName(mapping);
-            }
-        } catch (error) {
-            console.error('Error fetching match players:', error);
-        }
-    };
-
     useEffect(() => {
-        fetchMatchPlayers();
         fetchFantasyPoints();
         const interval = setInterval(fetchFantasyPoints, 30000);
         return () => clearInterval(interval);
-    }, []);
+    }, [slug]);
 
-    const findLeaderboardPlayer = (playerName: string) => {
-        const mappedId = playerIdByName[playerName];
-        if (mappedId) {
-            const byId = playerData.find(p => String(p.pid) === mappedId);
-            if (byId) return byId;
+    const getPlayerName = (entityPlayerId: number): string => {
+        for (const teamData of playersData) {
+            const player = teamData.playersList.find(p => p.entityPlayerId === entityPlayerId);
+            if (player) return player.name;
         }
-        return playerData.find(p => p.name === playerName);
+        return 'Unknown';
     };
 
-    const getPlayerPoints = (playerName: string, isCaptain: boolean, isViceCaptain: boolean) => {
-        const player = findLeaderboardPlayer(playerName);
+    const findLeaderboardPlayer = (entityPlayerId: number) => {
+        return playerData.find(p => String(p.pid) === String(entityPlayerId));
+    };
+
+    const getPlayerPoints = (entityPlayerId: number, isCaptain: boolean, isViceCaptain: boolean) => {
+        const player = findLeaderboardPlayer(entityPlayerId);
         if (!player) return { raw: 0, multiplied: 0 };
 
         const points = parseFloat(player.rawPoints);
@@ -82,15 +63,15 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
     const calculateTeamPoints = (team: Team) => {
         let totalPoints = 0;
         if (team.players.length > 0 && playerData.length > 0) {
-            team.players.forEach(playerName => {
-                const player = findLeaderboardPlayer(playerName);
+            team.players.forEach(entityPlayerId => {
+                const player = findLeaderboardPlayer(entityPlayerId);
                 if (player) {
                     let points = parseFloat(player.rawPoints);
 
                     // Double points for captain, 1.5x for vice captain
-                    if (playerName === team.captain) {
+                    if (entityPlayerId === team.captain) {
                         points *= 2;
-                    } else if (playerName === team.viceCaptain) {
+                    } else if (entityPlayerId === team.viceCaptain) {
                         points *= 1.5;
                     }
 
@@ -112,7 +93,7 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
 
     if (loading) {
         return (
-            <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white p-8">
+            <div className="min-h-screen bg-gradient-to-b from-neutral-900 to-neutral-800 text-white p-8">
                 <div className="max-w-4xl mx-auto">
                     <div className="text-center">
                         Loading fantasy scores...
@@ -129,11 +110,11 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
             {/* Main Team Details Section */}
             <div className="flex-1 grid gap-6">
                 {rankings.map((team, index) => (
-                    <Card key={team.name} className={`bg-gray-800 border-gray-700 transform transition-all`}>
+                    <Card key={team.name} className={`bg-neutral-800 border-neutral-700 transform transition-all`}>
                         <CardHeader className="flex flex-row items-center justify-between pb-2 p-3 sm:p-6">
                             <CardTitle className="text-xl font-bold text-white flex items-center gap-2">
                                 {index === 0 && <Trophy className="h-6 w-6 text-yellow-500" />}
-                                {index === 1 && <Medal className="h-6 w-6 text-gray-400" />}
+                                {index === 1 && <Medal className="h-6 w-6 text-neutral-400" />}
                                 {index === 2 && <Medal className="h-6 w-6 text-amber-600" />}
                                 {team.name}
                             </CardTitle>
@@ -145,34 +126,35 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="flex items-center gap-2">
                                     <Star className="h-5 w-5 text-yellow-500" />
-                                    <span className="text-gray-400">Captain:</span>
-                                    <span className="text-white">{team.captain}</span>
+                                    <span className="text-neutral-400">Captain:</span>
+                                    <span className="text-white">{getPlayerName(team.captain)}</span>
                                     <span className="text-sm text-yellow-500">
                                         ({getPlayerPoints(team.captain, true, false).raw} × 2 = {getPlayerPoints(team.captain, true, false).multiplied})
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <Star className="h-5 w-5 text-purple-500" />
-                                    <span className="text-gray-400">Vice Captain:</span>
-                                    <span className="text-white">{team.viceCaptain}</span>
+                                    <span className="text-neutral-400">Vice Captain:</span>
+                                    <span className="text-white">{getPlayerName(team.viceCaptain)}</span>
                                     <span className="text-sm text-purple-500">
                                         ({getPlayerPoints(team.viceCaptain, false, true).raw} × 1.5 = {getPlayerPoints(team.viceCaptain, false, true).multiplied})
                                     </span>
                                 </div>
                             </div>
                             <div className="mt-4">
-                                <div className="text-sm text-gray-400 mb-2">Team Players:</div>
+                                <div className="text-sm text-neutral-400 mb-2">Team Players:</div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                                    {team.players.map(player => {
-                                        const isCaptain = player === team.captain;
-                                        const isViceCaptain = player === team.viceCaptain;
-                                        const points = getPlayerPoints(player, isCaptain, isViceCaptain);
+                                    {team.players.map(entityPlayerId => {
+                                        const isCaptain = entityPlayerId === team.captain;
+                                        const isViceCaptain = entityPlayerId === team.viceCaptain;
+                                        const points = getPlayerPoints(entityPlayerId, isCaptain, isViceCaptain);
+                                        const playerName = getPlayerName(entityPlayerId);
                                         return (
-                                            <div key={player} className="flex items-center justify-between text-gray-300 bg-gray-900/50 p-2 px-3 rounded">
-                                                <span>{player}</span>
+                                            <div key={entityPlayerId} className="flex items-center justify-between text-neutral-300 bg-neutral-900/50 p-2 px-3 rounded">
+                                                <span>{playerName}</span>
                                                 <span className={`text-sm ${isCaptain ? 'text-yellow-500' :
                                                     isViceCaptain ? 'text-purple-500' :
-                                                        'text-gray-400'
+                                                        'text-neutral-400'
                                                     }`}>
                                                     {points.raw} {isCaptain ? '× 2' : isViceCaptain ? '× 1.5' : ''} = {points.multiplied}
                                                 </span>
@@ -192,8 +174,8 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
                     {rankings.slice(0, 5).map((team, index) => (
                         <Card
                             key={team.name}
-                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-gray-700 bg-gray-400/10 last:border-b-0 ${index === 0 ? 'bg-yellow-500/10' :
-                                    index === 1 ? 'bg-gray-400/10' :
+                            className={`flex items-center gap-4 p-4 sm:p-4 border-b border-neutral-700 bg-neutral-400/10 last:border-b-0 ${index === 0 ? 'bg-yellow-500/10' :
+                                    index === 1 ? 'bg-neutral-400/10' :
                                         index === 2 ? 'bg-amber-600/10' : ''
                                 }`}
                         >
@@ -214,7 +196,7 @@ const Scores = ({ teams, slug }: { teams: Team[], slug: string }) => {
                             </div>
                         </Card>
                     ))}
-                    <div className="text-center text-sm text-gray-500">
+                    <div className="text-center text-sm text-neutral-500">
                         ...
                     </div>
                     

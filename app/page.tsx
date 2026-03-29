@@ -1,60 +1,43 @@
 "use client";
 
 import Link from 'next/link';
+import { Navbar } from '@/components/navbar';
 
 export default function Home() {
-
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white">
-      <header className="z-50 w-full">
-        <div className="max-w-4xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex items-center">
-          <div className="mr-4 flex flex-1 items-center">
-            <Link href="/" className="mr-6 flex items-center space-x-2">
-              <span className="hidden font-bold text-xl sm:inline-block">CricketRoom</span>
-            </Link>
-            <nav className="flex items-center space-x-6 text-sm font-medium">
-              <Link href="#features">Features</Link>
-              <Link href="#how-it-works">How It Works</Link>
-            </nav>
-          </div>
-          <div className="flex items-center justify-end">
-            <Link href={'/rooms'} className="text-white bg-purple-600 hover:bg-purple-700 h-9 rounded-md px-3 flex items-center text-sm">
-              Explore Rooms
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <main className="flex-1">
-        <section className="max-w-4xl mx-auto w-full py-12 md:py-24 lg:py-32 xl:py-48">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl lg:text-6xl/none">
-                  Create Your Fantasy Cricket Room
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-300 md:text-xl">
-                  Join friends, compete with players worldwide, and experience the thrill of fantasy cricket like never
-                  before.
-                </p>
-              </div>
-              <div className="flex space-x-4">
-                <Link href={'/rooms/create'} className="text-white bg-purple-600 hover:bg-purple-700 h-10 rounded-md px-5 flex items-center text-base">
-                  Create a room
-                </Link>
-                <Link
-                  href={'https://github.com/vaibhav1663'}
-                  target="_blank"
-                  className="text-black bg-white hover:bg-gray-200 h-10 rounded-md px-5 flex items-center text-base"
-                >
-                  Developer
-                </Link>
-              </div>
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950">
+      <Navbar />
+      
+      <main className="min-h-screen flex items-center justify-center p-4 sm:p-6">
+        <div className="max-w-4xl mx-auto w-full">
+          <div className="flex flex-col items-center space-y-8 text-center">
+            <div className="space-y-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-neutral-900 dark:text-white font-[family-name:var(--font-geist-mono)]">
+                SAPNA 11
+              </h1>
+              <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto">
+                Build fantasy cricket teams, compete with friends in private leagues, and track real-time player performances.
+              </p>
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link
+                href="/rooms/create"
+                className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900 h-10 rounded-md px-6 flex items-center justify-center text-base font-medium transition-colors"
+              >
+                Create a Room
+              </Link>
+              <Link
+                href="https://github.com/vaibhav1663"
+                target="_blank"
+                className="bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 text-neutral-900 dark:text-white h-10 rounded-md px-6 flex items-center justify-center text-base font-medium transition-colors"
+              >
+                Developer
+              </Link>
             </div>
           </div>
-        </section>
-        </main>
-
+        </div>
+      </main>
     </div>
   );
 }
