@@ -2,11 +2,12 @@
 import { Player, Team, TeamData } from '@/app/types';
 import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Medal, Star, Trophy } from 'lucide-react';
+import { Medal, Star, Trophy, Clock } from 'lucide-react';
 
-const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, playersData: TeamData[] }) => {
+const Scores = ({ teams, slug, playersData, startTime }: { teams: Team[], slug: string, playersData: TeamData[], startTime: Date }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
+    const hasMatchStarted = new Date() >= new Date(startTime);
 
     const fetchFantasyPoints = async () => {
         try {
@@ -95,6 +96,36 @@ const Scores = ({ teams, slug, playersData }: { teams: Team[], slug: string, pla
         return (
             <div className="text-center text-neutral-900 dark:text-white p-8">
                 Loading fantasy scores...
+            </div>
+        );
+    }
+
+    if (!hasMatchStarted) {
+        return (
+            <div className="flex gap-4 mb-8 sm:flex-row flex-col-reverse">
+                <div className="flex-1 grid gap-6">
+                    {teams.map((team) => (
+                        <Card key={team.name} className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-700">
+                            <CardHeader className="p-3 sm:p-4">
+                                <CardTitle className="text-xl font-bold text-neutral-900 dark:text-white">
+                                    {team.name}
+                                </CardTitle>
+                                <div className="flex items-center gap-2 text-neutral-600 dark:text-neutral-400 mt-2">
+                                    <Clock className="h-4 w-4" />
+                                    <span className="text-sm">Match starts at {new Date(startTime).toLocaleString()}</span>
+                                </div>
+                            </CardHeader>
+                        </Card>
+                    ))}
+                </div>
+                <div className="w-full md:w-64">
+                    <Card className="bg-neutral-100 dark:bg-neutral-400/10 p-4">
+                        <div className="text-center text-neutral-600 dark:text-neutral-400">
+                            <Clock className="h-8 w-8 mx-auto mb-2" />
+                            <p className="text-sm">Player details will be revealed when the match starts</p>
+                        </div>
+                    </Card>
+                </div>
             </div>
         );
     }

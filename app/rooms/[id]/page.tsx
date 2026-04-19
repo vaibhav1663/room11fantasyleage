@@ -439,7 +439,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
         <div className="grid gap-6">
           {teams.length > 0 && (
-            <Scores teams={teams} slug={room.slug} playersData={playersData} />
+            <Scores teams={teams} slug={room.slug} playersData={playersData} startTime={room.startTime} />
           )}
         </div>
       </div>
