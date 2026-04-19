@@ -233,7 +233,13 @@ export default function RoomPage({ params }: { params: { id: string } }) {
           <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white ">
             {room.name}
           </h1>
-          {canAddTeam && !showAddTeam && (
+          {new Date() >= new Date(room.endTime) ? (
+            <Link href={`/rooms/${params.id}/match-center`}>
+              <Button className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900">
+                Match Center
+              </Button>
+            </Link>
+          ) : canAddTeam && !showAddTeam ? (
             <Button
               onClick={() => setShowAddTeam(true)}
               className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900"
@@ -241,7 +247,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
               <Plus className="w-4 h-4 mr-2" />
               Add Team
             </Button>
-          )}
+          ) : null}
         </div>
 
         {!isDeadlinePassed &&<Card className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-800 mb-8">
@@ -439,7 +445,7 @@ export default function RoomPage({ params }: { params: { id: string } }) {
 
         <div className="grid gap-6">
           {teams.length > 0 && (
-            <Scores teams={teams} slug={room.slug} playersData={playersData} startTime={room.startTime} />
+            <Scores teams={teams} slug={room.slug} playersData={playersData} startTime={room.startTime} endTime={room.endTime} roomId={params.id} />
           )}
         </div>
       </div>

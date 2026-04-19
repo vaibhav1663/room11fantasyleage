@@ -3,11 +3,14 @@ import { Player, Team, TeamData } from '@/app/types';
 import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Medal, Star, Trophy, Clock } from 'lucide-react';
+import { Button } from './ui/button';
+import Link from 'next/link';
 
-const Scores = ({ teams, slug, playersData, startTime }: { teams: Team[], slug: string, playersData: TeamData[], startTime: Date }) => {
+const Scores = ({ teams, slug, playersData, startTime, endTime, roomId }: { teams: Team[], slug: string, playersData: TeamData[], startTime: Date, endTime: Date, roomId: string }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
     const hasMatchStarted = new Date() >= new Date(startTime);
+    const hasMatchEnded = new Date() >= new Date(endTime);
 
     const fetchFantasyPoints = async () => {
         try {
