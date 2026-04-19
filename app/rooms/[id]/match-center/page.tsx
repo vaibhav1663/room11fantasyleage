@@ -224,7 +224,7 @@ export default function MatchCenterPage({ params }: { params: { id: string } }) 
               key={player.entityPlayerId}
               className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-700 transition-all hover:shadow-lg"
             >
-              <CardContent className="p-4 sm:p-5">
+              <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center gap-4">
                   <div className="relative flex items-center justify-end overflow-visible" style={{ width: '110px' }}>
                     <span
