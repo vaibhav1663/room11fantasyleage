@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import dbConnect from '@/app/lib/mongodb';
+import Room from '@/app/models/Room';
 
 type Props = {
   params: { id: string };
@@ -6,11 +8,13 @@ type Props = {
 
 async function getRoomData(id: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/rooms/${id}`, {
-      cache: 'no-store'
-    });
-    if (!res.ok) return null;
-    return await res.json();
+    await dbConnect();
+    const room = await Room.findById(id).lean();
+    if (!room) return null;
+    return {
+      name: (room as any).name,
+      slug: (room as any).slug,
+    };
   } catch (error) {
     console.error('Error fetching room:', error);
     return null;
