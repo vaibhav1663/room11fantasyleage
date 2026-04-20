@@ -226,18 +226,6 @@ export default function MatchCenterPage({ params }: { params: { id: string } }) 
             >
               <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center gap-4">
-                  <div className="relative flex items-center justify-end overflow-visible" style={{ width: '110px' }}>
-                    <span
-                      className="font-black text-transparent bg-clip-text bg-gradient-to-b from-neutral-400 to-neutral-600 dark:from-[#E2E2E2] dark:to-[#6B6B6B] select-none leading-none"
-                      style={{
-                        fontSize: '60px',
-                        WebkitTextStroke: '1px rgba(0, 0, 0, 0.1)',
-                      }}
-                    >
-                      {player.points.toFixed(0)}
-                    </span>
-                  </div>
-                  
                   <div className="flex-1 min-w-0">
                     <div className="text-lg sm:text-xl font-bold text-neutral-900 dark:text-white mb-2">
                       {player.name}
@@ -259,6 +247,18 @@ export default function MatchCenterPage({ params }: { params: { id: string } }) 
                         </Badge>
                       ))}
                     </div>
+                  </div>
+                  
+                  <div className="relative flex items-center justify-center overflow-visible">
+                    <span
+                      className="font-black text-transparent bg-clip-text bg-gradient-to-b from-neutral-400 to-neutral-600 dark:from-[#E2E2E2] dark:to-[#6B6B6B] select-none leading-none"
+                      style={{
+                        fontSize: '60px',
+                        WebkitTextStroke: '1px rgba(0, 0, 0, 0.1)',
+                      }}
+                    >
+                      {player.points.toFixed(0)}
+                    </span>
                   </div>
                 </div>
               </CardContent>
