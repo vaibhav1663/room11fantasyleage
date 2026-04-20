@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Head from 'next/head';
 import { Room, MatchPlayer, Team, TeamData } from '../../types';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -227,26 +228,35 @@ export default function RoomPage({ params }: { params: { id: string } }) {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white p-3 pt-16 sm:pt-20 sm:p-8">
-      <div className="max-w-4xl mx-auto pt-4 sm:pt-0">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white ">
-            {room.name}
-          </h1>
-          {new Date() >= new Date(room.endTime) ? (
-            <Link href={`/rooms/${params.id}/match-center`}>
-              <Button className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900">
-                Match Center
+    <>
+      <Head>
+        <title>{room.name} - Sapna 11</title>
+        <meta property="og:title" content={`${room.name} - Sapna 11`} />
+        <meta property="og:description" content={`Join the ${room.name} fantasy cricket league! Build your team and compete with friends.`} />
+        <meta property="og:url" content={`https://sapna11.vercel.app/rooms/${params.id}`} />
+        <meta name="twitter:title" content={`${room.name} - Sapna 11`} />
+        <meta name="twitter:description" content={`Join the ${room.name} fantasy cricket league! Build your team and compete with friends.`} />
+      </Head>
+      <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-white p-3 pt-16 sm:pt-20 sm:p-8">
+        <div className="max-w-4xl mx-auto pt-4 sm:pt-0">
+          <div className="flex justify-between items-center mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold text-neutral-900 dark:text-white ">
+              {room.name}
+            </h1>
+            {new Date() >= new Date(room.endTime) ? (
+              <Link href={`/rooms/${params.id}/match-center`}>
+                <Button className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900">
+                  Match Center
+                </Button>
+              </Link>
+            ) : canAddTeam && !showAddTeam ? (
+              <Button
+                onClick={() => setShowAddTeam(true)}
+                className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Add Team
               </Button>
-            </Link>
-          ) : canAddTeam && !showAddTeam ? (
-            <Button
-              onClick={() => setShowAddTeam(true)}
-              className="bg-neutral-900 dark:bg-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 text-white dark:text-neutral-900"
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Add Team
-            </Button>
           ) : null}
         </div>
 
@@ -450,5 +460,6 @@ export default function RoomPage({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
