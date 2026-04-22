@@ -9,8 +9,15 @@ import Link from 'next/link';
 const Scores = ({ teams, slug, playersData, startTime, endTime, roomId }: { teams: Team[], slug: string, playersData: TeamData[], startTime: Date, endTime: Date, roomId: string }) => {
     const [playerData, setPlayerData] = useState<Player[]>([]);
     const [loading, setLoading] = useState(true);
+    const [debugMode, setDebugMode] = useState(false);
     const hasMatchStarted = new Date() >= new Date(startTime);
     const hasMatchEnded = new Date() >= new Date(endTime);
+
+    useEffect(() => {
+        // Check localStorage for debug mode
+        const showPlayers = localStorage.getItem('sapna11_debug_show_players');
+        setDebugMode(showPlayers === 'true');
+    }, []);
 
     const fetchFantasyPoints = async () => {
         try {
@@ -103,7 +110,7 @@ const Scores = ({ teams, slug, playersData, startTime, endTime, roomId }: { team
         );
     }
 
-    if (!hasMatchStarted) {
+    if (!hasMatchStarted && !debugMode) {
         return (
             <div className="flex gap-4 mb-8 sm:flex-row flex-col-reverse">
                 <div className="flex-1 grid gap-6">

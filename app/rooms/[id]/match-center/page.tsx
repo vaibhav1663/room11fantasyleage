@@ -17,6 +17,13 @@ export default function MatchCenterPage({ params }: { params: { id: string } }) 
   const [playerData, setPlayerData] = useState<Player[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedTeams, setSelectedTeams] = useState<string[]>([]);
+  const [showDebugMode, setShowDebugMode] = useState(false);
+
+  useEffect(() => {
+    // Check localStorage for debug mode
+    const debugMode = localStorage.getItem('sapna11_debug_show_players');
+    setShowDebugMode(debugMode === 'true');
+  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -270,10 +277,16 @@ export default function MatchCenterPage({ params }: { params: { id: string } }) 
           <Card className="bg-white dark:bg-neutral-950 border-neutral-200 dark:border-neutral-700">
             <CardContent className="p-8 text-center">
               <p className="text-neutral-600 dark:text-neutral-400">
-                No player data available yet
+                {showDebugMode ? 'No player data available yet. Debug mode is ON.' : 'No player data available yet'}
               </p>
             </CardContent>
           </Card>
+        )}
+
+        {showDebugMode && (
+          <div className="fixed bottom-4 right-4 bg-yellow-500 text-black px-3 py-1 rounded text-xs font-mono">
+            DEBUG MODE ON
+          </div>
         )}
       </div>
     </div>
